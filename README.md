@@ -88,14 +88,6 @@ Random Forest dipilih karena mean CV F1 tertinggi. Pada holdout, XGBoost memberi
 
 ---
 
-## 🎯 Poin Penting Wawancara Lisan
-
-Jadwal resmi: **Selasa, 29 September 2026, 21.12–21.20 WIB**. Mahasiswa perlu dapat menjelaskan alasan membuang `duration`, mempertahankan `unknown` tanpa menebak penyebabnya, mengolah sentinel `pdays=999`, mengelompokkan profil identik, melakukan fit preprocessing per fold, memakai F1 dan threshold 0,5, serta memilih model dari CV.
-
-Analisis ini bersifat retrospektif pada satu bank dan periode historis yang sama. Split acak bergrup bukan validasi masa depan; tanpa ID nasabah, pemisahan seluruh nasabah berulang tidak terjamin. Ketersediaan fitur menjelang kontak, termasuk jadwal dan indikator ekonomi, perlu diaudit sebelum penggunaan nyata. Tidak ada penghematan biaya yang dihitung dari data ini.
-
----
-
 ## 📚 Sitasi Sumber Data
 
 ```bibtex
