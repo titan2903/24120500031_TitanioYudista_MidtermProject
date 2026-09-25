@@ -1,0 +1,33 @@
+# ==========================================
+# Environment & Tooling (Internal Development)
+# ==========================================
+.venv/
+scripts/
+sandbox/
+
+# ==========================================
+# Cache & Temporary Files
+# ==========================================
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
+# ==========================================
+# File & Folder yang TIDAK Wajib Dikumpulkan
+# Berdasarkan Section 10 Project Brief:
+# (Hanya 4 komponen yang wajib: .ipynb, executive_summary.pdf,
+#  screenshot bukti upload github .pdf, dan folder data/)
+# ==========================================
+
+# 1. Dokumen Soal / Brief UTS dari Dosen
+Midterm-Predictive Analytics Project Brief and Rubric.pdf
+
+# 2. File Mentah Markdown (Yang wajib dikumpulkan adalah file PDF-nya)
+executive_summary.md
+
+# 3. Artefak Perantara / Internal Modeling Output
+artifacts/
+
+# 4. Arsip ZIP Pengumpulan (Agar tidak terduplikasi ke Git)
+*.zip
