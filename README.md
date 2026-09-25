@@ -1,48 +1,109 @@
-# Midterm Predictive Analytics — Bank Marketing
+# Midterm Predictive Analytics — Bank Marketing Term Deposit Prediction
 
-**Titanio Yudista · 24120500031 · Cakrawala University**
+**Titanio Yudista · NIM: 24120500031 · Cakrawala University**
 
-Proyek ini memprediksi apakah catatan kampanye/kontak bank berakhir dengan langganan deposito (`y=yes`). Dataset yang dipakai hanya varian UCI `bank-additional-full.csv`. Semua artefak lokal dibuat dari data asli dan notebook yang disertakan.
+Mata Kuliah: *Predictive Analytics* (Ujian Tengah Semester)
 
-## Menjalankan proyek
+---
 
-1. Gunakan Python 3.12.10 bila memungkinkan. Dari root folder proyek, buat environment sendiri dan jalankan `python -m pip install -r requirements.txt`.
-2. Buka `midterm_predictive_analytics.ipynb` dari root folder proyek dengan kernel Python 3. Pilih **Restart Runtime → Run All**. Path di notebook relatif terhadap direktori kerja saat notebook dijalankan.
-3. Dataset sudah ada di `data/`. Jika CSV atau dokumentasi additional tidak tersedia, sel setup mencoba mengunduh arsip resmi UCI hingga tiga kali. File asli tidak diubah oleh cleaning.
-4. Untuk menjalankan tanpa antarmuka notebook: `python -m jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=1800 midterm_predictive_analytics.ipynb`.
-5. Setelah notebook berhasil, buat ulang ringkasan: `python scripts/build_summary.py`. Script membaca hasil aktual dari `artifacts/` dan menulis `executive_summary.md` serta `executive_summary.pdf`.
+## 📌 Ringkasan Proyek
 
-Di workspace yang memakai perintah `rtk`, awali perintah shell dengan `rtk`; contoh: `rtk proxy python scripts/build_summary.py`.
+Repositori ini memuat alur kerja analitik prediktif menyeluruh (*end-to-end predictive analytics workflow*) untuk memprediksi apakah catatan kampanye/kontak akan berakhir dengan langganan deposito berjangka (*term deposit*; target `y=yes` atau `no`). Satu baris adalah catatan terkait kampanye/kontak, bukan identitas nasabah unik.
 
-Untuk Google Colab, unggah dan ekstrak **seluruh folder proyek** terlebih dahulu, pindahkan working directory ke root folder tersebut, instal `requirements.txt`, lalu buka notebook dan jalankan semua sel. Validasi Colab belum dilakukan.
+Dataset yang digunakan bersumber dari **UCI Machine Learning Repository** varian resmi `bank-additional-full.csv` (41.188 baris × 21 kolom), yang mencakup atribut profil demografi nasabah, riwayat kontak kampanye, serta indikator makroekonomi sosial.
 
-## Sumber data
+---
 
-Moro, S., Rita, P., & Cortez, P. (2014). *Bank Marketing [Dataset]*. UCI Machine Learning Repository. DOI [10.24432/C5K306](https://doi.org/10.24432/C5K306). [Halaman dataset](https://archive.ics.uci.edu/dataset/222/bank+marketing). CSV versi additional full (41.188 baris, 21 kolom) berasal dari arsip resmi UCI. Waktu unduh dan checksum SHA-256 ada di `data/source_metadata.json`; dokumentasi varian ada di `data/bank-additional-names.txt`.
+## 📂 Struktur Repositori
 
-## Metode dan hasil
+Struktur berikut berisi **hanya file yang tercatat pada branch `main`** di [repository GitHub](https://github.com/titan2903/24120500031_TitanioYudista_MidtermProject):
 
-Setelah 12 duplikat penuh dihapus, 32.940 catatan masuk development dan 8.236 ke holdout. Profil prediktor identik dijaga dalam grup yang sama. Lima fold development membandingkan baseline mayoritas, Logistic Regression, Random Forest, dan XGBoost dengan preprocessing per fit fold. Metrik utama adalah F1 kelas positif pada threshold 0,5. Model dipilih dari CV sebelum holdout dibuka.
+```text
+.
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── midterm_predictive_analytics.ipynb
+├── executive_summary.pdf
+└── data/
+    ├── bank-additional-full.csv
+    ├── bank-additional-names.txt
+    └── source_metadata.json
+```
 
-Random Forest terpilih dengan mean CV F1 **0,493**; pada holdout F1 **0,485**, precision **0,417**, recall **0,581**, ROC-AUC **0,786**, dan AP **0,446**. Angka lengkap ada di `artifacts/cv_results.csv` dan `artifacts/test_metrics.csv`. Ini evaluasi retrospektif pada satu bank/periode historis, bukan validasi masa depan. Tanpa ID nasabah, grup profil identik juga tidak menjamin pemisahan semua nasabah berulang.
+Dataset CSV dan dokumentasi varian additional disertakan langsung. Notebook memuat output tabel dan grafik; PDF berisi ringkasan eksekutif dua halaman.
 
-## Struktur penting
+---
 
-- `midterm_predictive_analytics.ipynb`: laporan analitik 11 bagian dengan output tersimpan.
-- `data/`: CSV asli, dokumentasi additional, dan metadata asal/checksum.
-- `artifacts/`: manifest split, log cleaning, hasil CV, keputusan model, hasil test, prediksi, importance, metadata run, dan grafik.
-- `executive_summary.md` dan `executive_summary.pdf`: ringkasan manajerial dua halaman dari hasil aktual.
-- `scripts/create_notebook.py`: sumber sel notebook yang dapat diedit. Perintah biasa menolak menimpa notebook yang sudah ada. Gunakan `--output /tmp/preview.ipynb` untuk pratinjau; `--force` hanya setelah membuat backup, karena regenerasi menghapus output dan perlu diikuti Run All.
-- `scripts/build_summary.py`: generator PDF dan Markdown dari artefak.
-- `scripts/package_submission.py`: validasi lokal dengan `--check-local`; membuat ZIP final hanya setelah `github_proof.pdf` nyata tersedia.
-- `QA.md`: bukti pemeriksaan lokal dan pekerjaan pengumpulan yang masih pending.
+## ⚙️ Cara Menjalankan Proyek (*Reproducibility*)
 
-## Pemeriksaan paket
+### A. Lokal
 
-Jalankan `python scripts/package_submission.py --check-local` untuk memeriksa file lokal. Setelah notebook dan PDF benar-benar diunggah ke repository GitHub mahasiswa, simpan screenshot nyata beserta username/URL sebagai `github_proof.pdf` di root proyek. Lalu jalankan `python scripts/package_submission.py`; skrip memeriksa isi ZIP dan path dataset setelah ekstraksi. Unggah ZIP ke RISE secara terpisah. Skrip menolak membuat ZIP jika bukti GitHub belum ada.
+1. Clone repository dengan URL yang dapat digunakan tanpa konfigurasi alias SSH khusus:
 
-## Status pengumpulan
+   ```bash
+   git clone https://github.com/titan2903/24120500031_TitanioYudista_MidtermProject.git
+   cd 24120500031_TitanioYudista_MidtermProject
+   ```
 
-Artefak lokal selesai. Bukti upload nyata ke GitHub (`github_proof.pdf`), verifikasi Colab, ZIP final lengkap, unggah RISE, dan wawancara mahasiswa masih pending. Jangan menyebut paket ini sudah dikumpulkan. Brief resmi menjadwalkan wawancara **Selasa, 29 September 2026, 21.12–21.20 WIB**; tenggat RISE harus dicek di pengumuman kuliah.
+2. Gunakan Python 3.12 jika tersedia, lalu instal dependensi:
 
-Untuk persiapan wawancara 7–8 menit, pastikan dapat menjelaskan: alasan `duration` dibuang; mengapa `unknown/default` dipertahankan; arti `pdays=999`; grup profil dan split; fit preprocessing per fold; F1 dan threshold 0,5; pemilihan dari CV; importance; serta keterbatasan generalisasi.
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+3. Buka `midterm_predictive_analytics.ipynb` dari **root repository** dan jalankan *Restart Kernel / Runtime → Run All*. Path dataset relatif terhadap direktori kerja. Seluruh hasil analisis baru akan dibuat ulang saat notebook dijalankan.
+
+### B. Google Colab
+
+Clone repository ke runtime Colab, pindah ke root repository dengan `%cd /content/24120500031_TitanioYudista_MidtermProject`, instal `requirements.txt`, lalu jalankan semua sel notebook. Keberhasilan Run All **sudah diverifikasi lokal**, tetapi eksekusi di Colab belum diverifikasi.
+
+---
+
+## 🔬 Metodologi & Alur Kerja Analitik
+
+Notebook mengikuti 11 bagian wajib: Project Overview; Dataset Description & Source; Data Quality Assessment; Data Preparation; EDA; Feature Engineering; Baseline Model; Model Training; Model Evaluation; Feature Importance; serta Conclusion & Recommendations.
+
+- Dua belas baris duplikat identik dihapus pada 21 kolom asli. Nilai kategori `unknown` dipertahankan. Sentinel `pdays=999` diubah menjadi indikator pernah dihubungi dan `pdays_clean`.
+- `duration` dikeluarkan dari prediktor karena durasi panggilan belum tersedia sebelum kontak. Fitur `balance` milik varian klasik tidak ada pada dataset additional ini.
+- Profil prediktor identik dijaga dalam grup yang sama. Fold pertama `StratifiedGroupKFold` menjadi holdout; lima fold baru pada development dipakai sama untuk semua model.
+- Imputasi, scaling, dan one-hot encoding di-fit **di dalam pipeline pada data fit fold saja**. Model yang dibandingkan: DummyClassifier, Logistic Regression, Random Forest, dan XGBoost.
+- Model dipilih menggunakan mean F1 kelas positif dari CV pada threshold 0,5. Holdout dipakai untuk laporan akhir. Selain F1, notebook melaporkan precision, recall, accuracy, ROC-AUC, dan **AP (*Average Precision*)**.
+- Importance model terpilih berasal dari `feature_importances_` Random Forest. Ini ukuran prediktif berbasis penurunan impurity, bukan bukti sebab akibat; notebook tidak menghitung permutation importance.
+
+---
+
+## 📊 Hasil Utama Pemodelan
+
+Hasil yang tersimpan dalam notebook (dibulatkan tiga desimal):
+
+| Model | Mean CV F1 | Test F1 | Test Precision | Test Recall | Test ROC-AUC | Test AP |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Dummy | 0,000 | 0,000 | 0,000 | 0,000 | 0,500 | 0,113 |
+| Logistic Regression | 0,453 | 0,451 | 0,354 | 0,620 | 0,796 | 0,448 |
+| **Random Forest (terpilih)** | **0,493** | **0,485** | **0,417** | **0,581** | **0,786** | **0,446** |
+| XGBoost | 0,467 | 0,463 | 0,366 | 0,629 | 0,807 | 0,474 |
+
+Random Forest dipilih karena mean CV F1 tertinggi. Pada holdout, XGBoost memberi recall dan AP lebih tinggi, sedangkan Random Forest memberi precision dan F1 lebih tinggi. Hasil holdout ini **tidak** dipakai untuk memilih ulang model. Baseline Dummy memperlihatkan mengapa akurasi mayoritas yang tinggi tidak cukup: F1 dan recall kelas positifnya nol.
+
+---
+
+## 🎯 Poin Penting Wawancara Lisan
+
+Jadwal resmi: **Selasa, 29 September 2026, 21.12–21.20 WIB**. Mahasiswa perlu dapat menjelaskan alasan membuang `duration`, mempertahankan `unknown` tanpa menebak penyebabnya, mengolah sentinel `pdays=999`, mengelompokkan profil identik, melakukan fit preprocessing per fold, memakai F1 dan threshold 0,5, serta memilih model dari CV.
+
+Analisis ini bersifat retrospektif pada satu bank dan periode historis yang sama. Split acak bergrup bukan validasi masa depan; tanpa ID nasabah, pemisahan seluruh nasabah berulang tidak terjamin. Ketersediaan fitur menjelang kontak, termasuk jadwal dan indikator ekonomi, perlu diaudit sebelum penggunaan nyata. Tidak ada penghematan biaya yang dihitung dari data ini.
+
+---
+
+## 📚 Sitasi Sumber Data
+
+```bibtex
+@misc{moro2014bank,
+  author       = {Moro, Sérgio and Rita, Paulo and Cortez, Paulo},
+  title        = {{Bank Marketing Dataset}},
+  year         = {2014},
+  howpublished = {UCI Machine Learning Repository},
+  note         = {{DOI: 10.24432/C5K306}}
+}
+```
