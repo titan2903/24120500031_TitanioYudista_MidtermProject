@@ -16,7 +16,7 @@ Dataset yang digunakan bersumber dari **UCI Machine Learning Repository** varian
 
 ## 📂 Struktur Repositori
 
-Struktur berikut berisi **hanya file yang tercatat pada branch `main`** di [repository GitHub](https://github.com/titan2903/24120500031_TitanioYudista_MidtermProject):
+Struktur berkas utama proyek saat ini untuk [repository GitHub](https://github.com/titan2903/24120500031_TitanioYudista_MidtermProject):
 
 ```text
 .
@@ -25,13 +25,16 @@ Struktur berikut berisi **hanya file yang tercatat pada branch `main`** di [repo
 ├── requirements.txt
 ├── midterm_predictive_analytics.ipynb
 ├── executive_summary.pdf
+├── github_proof.pdf
+├── images/
+│   └── screenshot_github.png
 └── data/
     ├── bank-additional-full.csv
     ├── bank-additional-names.txt
     └── source_metadata.json
 ```
 
-Dataset CSV dan dokumentasi varian additional disertakan langsung. Notebook memuat output tabel dan grafik; PDF berisi ringkasan eksekutif dua halaman.
+Dataset CSV dan dokumentasi varian additional disertakan langsung. Notebook memuat output tabel dan grafik; `executive_summary.pdf` berisi ringkasan eksekutif dua halaman. `github_proof.pdf` dibuat dari `images/screenshot_github.png` sebagai bukti unggahan ke GitHub. Kedua berkas bukti GitHub tersebut masih perlu di-commit dan di-push agar muncul di repository publik.
 
 ---
 
